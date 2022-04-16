@@ -1,60 +1,16 @@
 ﻿@{
-    ViewData["Title"] = "Accommodations";
+    ViewData["Title"] = "Checkout";
 }
 
 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
-    </ol>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+    <li class="breadcrumb-item"><a asp-area="" asp-controller="Accommodations" asp-action="Index">Accommodations</a></li>
+    <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+  </ol>
 </nav>
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="card bg-dark text-white">
-            <div class="card-body">
-                <h5 class="card-title">Basic 2x1 Room</h5>
-                <p class="card-text">Very basic and small room. Just for sleeping.</p>
-                <strong>Services</strong>
-                <p>No extra services provided</p>
-                <a class="btn btn-outline-warning" asp-area="" asp-controller="Reservations" asp-action="Checkout"><i class="bi bi-door-open"></i> Book Now</a>
-                <a type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="bi bi-card-list"></i>
-                    Details
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="card bg-dark text-white">
-            <div class="card-body">
-                <h5 class="card-title">City View Suite</h5>
-                <p class="card-text">High-Class Suite with an skyline view of Amsterdam.</p>
-                <strong>Services</strong>
-                <p>Personal butler, Room Service, 8K Television, Gold Bathroom with Jacuzzi and Jet Shower, Private Car Parking and all the other rich people stuff</p>
-                <a class="btn btn-outline-warning" asp-area="" asp-controller="Reservations" asp-action="Checkout"><i class="bi bi-door-open"></i> Book Now</a>
-                <a type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="bi bi-card-list"></i>
-                    Details
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><strong>Details | </strong> {AccommodationName}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <ul class="list-group">
+<h4>Summary</h4>
+<ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <strong>Room Count</strong>
                         <span class="badge alert-info rounded-pill">5</span>
@@ -92,7 +48,51 @@
                         <span class="badge alert-primary rounded-pill">Netherlands</span>
                     </li>
                 </ul>
-            </div>
+<hr />
+<h4>Customer information</h4>
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInputValue" placeholder="Firstname" value="">
+            <label for="floatingInputValue">Firstname</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInputValue" placeholder="Surname" value="">
+            <label for="floatingInputValue">Lastname</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInputValue" placeholder="mail@example.com" value="">
+            <label for="floatingInputValue">Email</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="tel" class="form-control" id="floatingInputValue" placeholder="06123456789" value="">
+            <label for="floatingInputValue">Phone</label>
+        </div>
+
+
+
+    </div>
+    <div class="col-md-6">
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="floatingInputValue" placeholder="06123456789" value="">
+            <label for="floatingInputValue">Check-in</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="floatingInputValue" placeholder="06123456789" value="">
+            <label for="floatingInputValue">Check-out</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="floatingInputValue" placeholder="0" value="0" disabled>
+            <label for="floatingInputValue">Total Costs | <strong>€</strong></label>
+        </div>
+        
+    </div>
+    <div class="modal-footer justify-content-between">
+        <a class="btn btn-outline-danger" type="button" asp-area="" asp-controller="Accommodations" asp-action="Index"><i class="bi bi-x-circle"></i> Cancel</a>
+       
+        <div>
+            <a class="btn btn-outline-success" type="button" asp-area="" asp-controller="Reservations" asp-action="Receipt"><i class="bi bi-check-circle" ></i> Place Reservation</a>
         </div>
     </div>
+
 </div>

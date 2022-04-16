@@ -15,7 +15,6 @@
     <Folder Include="DBContext\" />
     <Folder Include="Pages\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Views\Reservations\" />
   </ItemGroup>
 
 </Project>

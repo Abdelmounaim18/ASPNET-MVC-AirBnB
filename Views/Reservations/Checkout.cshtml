@@ -1,4 +1,4 @@
-﻿@model ASPNET_MVC_AirBnB.Models.BnB
+﻿@model ASPNET_MVC_AirBnB.ViewModels.ReservationViewModel
 @{
     ViewData["Title"] = "Checkout";
 }
@@ -10,26 +10,27 @@
         <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
     </ol>
 </nav>
-<h4>Summary | @Html.DisplayFor(model => model.Name)</h4>
+<h4>Summary | @Html.DisplayFor(model => model.BnB.Name)</h4>
 
 <div class="row g-3">
+
     <div class="col-md-6">
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>Rooms</strong>
-                <span class="badge alert-info rounded-pill">@Html.DisplayFor(model => model.NumRooms)</span>
+                <span class="badge alert-info rounded-pill">@Html.DisplayFor(model => model.BnB.NumRooms)</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>Bathrooms</strong>
-                <span class="badge alert-info rounded-pill">@Html.DisplayFor(model => model.NumBathrooms)</span>
+                <span class="badge alert-info rounded-pill">@Html.DisplayFor(model => model.BnB.NumBathrooms)</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>Beds</strong>
-                <span class="badge alert-info rounded-pill">@Html.DisplayFor(model => model.NumBeds)</span>
+                <span class="badge alert-info rounded-pill">@Html.DisplayFor(model => model.BnB.NumBeds)</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>Pets</strong>
-                @if (Model.PetsAllowed == "Yes")
+                @if (Model.BnB.PetsAllowed == "Yes")
                 {
                     <span class="badge alert-success rounded-pill"><span class="bi bi-check-circle-fill"></span> Allowed</span>
                 }
@@ -44,7 +45,7 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>Smoking</strong>
 
-                @if (Model.SmokingAllowed == "Yes")
+                @if (Model.BnB.SmokingAllowed == "Yes")
                 {
                     <span class="badge alert-success rounded-pill"><span class="bi bi-check-circle-fill"></span> Allowed</span>
                 }
@@ -55,44 +56,65 @@
 
             </li>
         </ul>
+
     </div>
     <div class="col-md-6">
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>Street </strong>
-                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.Location.Street)</span>
+                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Location.Street)</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>Zip Code </strong>
-                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.Location.ZipCode)</span>
+                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Location.ZipCode)</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>City </strong>
-                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.Location.City)</span>
+                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Location.City)</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <strong>Country </strong>
-                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.Location.Country)</span>
+                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Location.Country)</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span><strong>Price  </strong><small>per night</small></span>
-                <span class="badge alert-warning rounded-pill"><strong>€</strong>@Html.DisplayFor(model => model.Price),-</span>
+                <span class="badge alert-warning rounded-pill"><strong>€</strong>@Html.DisplayFor(model => model.BnB.Price),-</span>
             </li>
         </ul>
+        <hr />
+        <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>Host </strong>
+            <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Host.Name)</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>Email </strong>
+            <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Host.Email)</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>Phone </strong>
+            <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Host.PhoneNumber)</span>
+        </li>
+
+    </ul>
     </div>
+    
 </div>
 <br />
 <span class="modal-footer"></span>
 <h4>Your details</h4>
-<div class="row g-3">
+<form class="row g-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="col-md-6">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInputValue" placeholder="Firstname" value="">
             <label for="floatingInputValue">Firstname</label>
+            <span asp-validation-for="Guest.FirstName" class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInputValue" placeholder="Surname" value="">
             <label for="floatingInputValue">Lastname</label>
+            <span asp-validation-for="Guest.LastName" class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
             <input type="email" class="form-control" id="floatingInputValue" placeholder="mail@example.com" value="">
@@ -123,10 +145,10 @@
     </div>
     <div class="modal-footer justify-content-between">
         <a class="btn btn-outline-danger" type="button" asp-area="" asp-controller="Accommodations" asp-action="BnBs"><i class="bi bi-x-circle"></i> Cancel</a>
-
+        <a  class="btn btn-outline-warning" type="button" asp-area="" asp-controller="Reservations" asp-action="Receipt"><i class="bi bi-bug"></i> DEV | Receipt</a>
         <div>
-            <a class="btn btn-outline-success" type="button" asp-area="" asp-controller="Reservations" asp-action="Receipt"><i class="bi bi-check-circle"></i> Place Reservation</a>
+            <button type="submit" class="btn btn-outline-success" type="button" ><i class="bi bi-check-circle"></i> Place Reservation</button>
         </div>
     </div>
 
-</div>
+</form>

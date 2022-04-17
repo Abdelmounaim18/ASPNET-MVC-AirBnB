@@ -1,0 +1,112 @@
+﻿@model ASPNET_MVC_AirBnB.ViewModels.BnBViewModel
+
+@{
+    ViewData["Title"] = "Accommodations";
+}
+
+
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+    </ol>
+</nav>
+
+<div class="row">
+    @foreach (var item in Model.AllBnBs)
+    {
+        <div class="col-lg-4 mb-4">
+            <div class="card bg-dark text-white">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-house-door" ></i> @Html.DisplayFor(modelItem => item.Name)</h5>
+                    <p class="card-text"></p>
+                    <p>@Html.DisplayFor(modelItem => item.Location.City), @Html.DisplayFor(modelItem => item.Location.Country)</p>
+                    <strong>Hosted by</strong>
+                    <p>Name: @Html.DisplayFor(modelItem => item.Host)</p>
+                    <hr>
+                    <a class="btn btn-outline-warning" asp-area="" asp-controller="Reservations" asp-action="Checkout" asp-route-id="@item.Id"><i class="bi bi-door-open"></i> Book Now</a>
+                    <a type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#moreInfoModal-@Html.DisplayFor(modelItem => item.Id)">
+                        <i class="bi bi-card-list"></i>
+                        Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="moreInfoModal-@Html.DisplayFor(modelItem => item.Id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><strong>Details | </strong>@Html.DisplayFor(modelItem => item.Name)</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Room Count</strong>
+                                <span class="badge alert-info rounded-pill">@Html.DisplayFor(modelItem => item.NumRooms)</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Bathroom Count</strong>
+                                <span class="badge alert-info rounded-pill">@Html.DisplayFor(modelItem => item.NumBathrooms)</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Bed Count</strong>
+                                <span class="badge alert-info rounded-pill">@Html.DisplayFor(modelItem => item.NumBeds)</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Pets</strong>
+                                @if (item.PetsAllowed == "Yes")
+                                {
+                                    <span class="badge alert-success rounded-pill"><span class="bi bi-check-circle-fill"></span> Allowed</span>
+                                }
+                                else
+                                {
+                                    <span class="badge alert-danger rounded-pill"><span class="bi bi-x-circle-fill"></span> Not Allowed</span>
+                                }
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Smoking</strong>
+
+                                @if (item.SmokingAllowed == "Yes")
+                                {
+                                    <span class="badge alert-success rounded-pill"><span class="bi bi-check-circle-fill"></span> Allowed</span>
+                                }
+                                else
+                                {
+                                    <span class="badge alert-danger rounded-pill"><span class="bi bi-x-circle-fill"></span> Not Allowed</span>
+                                }
+
+
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Price </strong>
+                                <span class="badge alert-warning rounded-pill"><strong>€</strong>@Html.DisplayFor(modelItem => item.Price),-</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Street </strong>
+                                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Location.Street)</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Zip Code </strong>
+                                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Location.ZipCode)</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>City </strong>
+                                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Location.City)</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Country </strong>
+                                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Location.Country)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+</div>

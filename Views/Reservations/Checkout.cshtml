@@ -176,21 +176,24 @@
         var DateValueStart = document.getElementById("checkInDate").value;
         var DateValueEnd = document.getElementById("checkOutDate").value;
         var PriceValue = document.getElementById("toatalCosts");
-        let startDate = DateValueStart.value;
-        let endDate = DateValueEnd.value;
-        
+
 
         var diff = Math.floor((Date.parse(DateValueEnd) - Date.parse(DateValueStart)) / 86400000);
 
         console.log(diff)
 
         ///Checks whether the startDate is higher than the endDate. If so changes the endDate to match the startDate.
-        if (new Date(startDate) > new Date(endDate)) {
+        if (new Date(startDate) > Date.parse(DateValueEnd)) {
             DateValueEnd.value = startDate
         }
 
         ///Calculates the day difference and multiplies it by the price per day.
-        let totalPrice = ((new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 3600 * 24)) * price;
+        let calculatedCosts = diff * price;
+
+        if calculatedCosts
+        
+       
+
         if (totalPrice >= 0) {
             PriceValue.value = totalPrice;
         } else {

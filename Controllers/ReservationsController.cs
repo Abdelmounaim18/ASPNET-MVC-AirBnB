@@ -44,7 +44,23 @@ namespace ASPNET_MVC_AirBnB.Controllers
         //}
 
 
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PlaceReservation([Bind("Id,FirstName,LastName,Email,PhoneNumber")] Guest guest)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(guest);
+                _context.SaveChanges();
+                return RedirectToAction("Receipt");
+            }
+
+            return View();
+        }
+
+
+
         public IActionResult Receipt()
         {
             return View();

@@ -17,15 +17,21 @@ namespace ASPNET_MVC_AirBnB.Models
         public int Id
         { get => _id; set { _id = value; } }
 
-        [Required(ErrorMessage = "This field is required")]
+        [Display(Name = "Firstname")]
+        [Required(ErrorMessage = "Please fill in your {0}")]
         public string? FirstName { get => _firstName; set { _firstName = value; } }
 
-        [Required(ErrorMessage = "This field is required")]
+        [Display(Name = "Lastname")]
+        [Required(ErrorMessage = "Please fill in your {0}")]
         public string? LastName { get => _lastName; set { _lastName = value; } }
 
+        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Please enter your {0}")]
         public string? Email
         { get => _email; set { _email = value; } }
 
+        [Display(Name = "Phonenumber")]
+        [Required(ErrorMessage = "Please enter your {0}")]
         public int PhoneNumber
         { get => _phoneNumber; set { _phoneNumber = value;  } }
 

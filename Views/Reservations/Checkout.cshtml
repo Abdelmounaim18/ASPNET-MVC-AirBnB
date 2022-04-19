@@ -83,46 +83,48 @@
         </ul>
         <hr />
         <ul class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong>Host </strong>
-            <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Host.Name)</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong>Email </strong>
-            <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Host.Email)</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong>Phone </strong>
-            <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Host.PhoneNumber)</span>
-        </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>Host </strong>
+                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Host.Name)</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>Email </strong>
+                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Host.Email)</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>Phone </strong>
+                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => model.BnB.Host.PhoneNumber)</span>
+            </li>
 
-    </ul>
+        </ul>
     </div>
-    
+
 </div>
 <br />
 <span class="modal-footer"></span>
 <h4>Your details</h4>
-<form class="row g-3">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="PlaceReservation" class="row g-3">
     <div class="col-md-6">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInputValue" placeholder="Firstname" value="">
-            <label for="floatingInputValue">Firstname</label>
-            <span asp-validation-for="Guest.FirstName" class="text-danger"></span>
+            <input asp-for="Guest.FirstName" type="text" class="form-control" placeholder="Firstname" value="">
+            <label asp-for="Guest.FirstName">Firstname</label>
+            <span asp-validation-for="Guest.FirstName" class="badge bg-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInputValue" placeholder="Surname" value="">
-            <label for="floatingInputValue">Lastname</label>
-            <span asp-validation-for="Guest.LastName" class="text-danger"></span>
+            <input asp-for="Guest.LastName" type="text" class="form-control" placeholder="Surname" value="">
+            <label asp-for="Guest.LastName">Lastname</label>
+            <span asp-validation-for="Guest.LastName" class="badge bg-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInputValue" placeholder="mail@example.com" value="">
-            <label for="floatingInputValue">Email</label>
+            <input asp-for="Guest.Email" type="email" class="form-control" placeholder="mail@example.com" value="">
+            <label asp-for="Guest.Email">Email</label>
+            <span asp-validation-for="Guest.Email" class="badge bg-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input type="tel" class="form-control" id="floatingInputValue" placeholder="06123456789" value="">
-            <label for="floatingInputValue">Phone</label>
+            <input asp-for="Guest.PhoneNumber" type="number" class="form-control" placeholder="06123456789" value="">
+            <label asp-for="Guest.PhoneNumber">Phone</label>
+            <span asp-validation-for="Guest.PhoneNumber" class="badge bg-danger"></span>
         </div>
 
 
@@ -130,25 +132,69 @@
     </div>
     <div class="col-md-6">
         <div class="form-floating mb-3">
-            <input type="date" class="form-control" id="floatingInputValue" placeholder="06123456789" value="">
-            <label for="floatingInputValue">Check-in</label>
+            <input asp-for="Reservation.CheckIn" id="checkInDate" onchange="checkValidityAndPrice(@Model.BnB.Price)" type="date" class="form-control" placeholder="01-01-2022" value="">
+            <label asp-for="Reservation.CheckIn">Check-in</label>
+            <span asp-validation-for="Reservation.CheckIn" class="badge bg-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input type="date" class="form-control" id="floatingInputValue" placeholder="06123456789" value="">
-            <label for="floatingInputValue">Check-out</label>
+            <input asp-for="Reservation.CheckOut" id="checkOutDate" onchange="checkValidityAndPrice(@Model.BnB.Price)" type="date" class="form-control" placeholder="01-02-2022" value="">
+            <label asp-for="Reservation.CheckOut">Check-out</label>
+            <span asp-validation-for="Reservation.CheckOut" class="badge bg-danger"></span>
         </div>
+
+        @{
+            
+
+        }
+
         <div class="form-floating mb-3">
-            <input type="number" class="form-control" id="floatingInputValue" placeholder="0" value="0" disabled>
-            <label for="floatingInputValue">Total Costs | <strong>€</strong></label>
+            <input type="number" class="form-control" id="toatalCosts" placeholder="@Model.BnB.Price" value="@Model.BnB.Price" disabled>
+            <label>Total Costs | <strong>€</strong></label>
         </div>
 
     </div>
     <div class="modal-footer justify-content-between">
         <a class="btn btn-outline-danger" type="button" asp-area="" asp-controller="Accommodations" asp-action="BnBs"><i class="bi bi-x-circle"></i> Cancel</a>
-        <a  class="btn btn-outline-warning" type="button" asp-area="" asp-controller="Reservations" asp-action="Receipt"><i class="bi bi-bug"></i> DEV | Receipt</a>
+        <a class="btn btn-outline-warning" type="button" asp-area="" asp-controller="Reservations" asp-action="Receipt"><i class="bi bi-bug"></i> DEV | Receipt</a>
         <div>
-            <button type="submit" class="btn btn-outline-success" type="button" ><i class="bi bi-check-circle"></i> Place Reservation</button>
+            <button type="submit" value="PlaceReservation" class="btn btn-outline-success"><i class="bi bi-check-circle"></i> Place Reservation</button>
         </div>
     </div>
 
 </form>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
+
+<script type="text/javascript">
+
+    function checkValidityAndPrice(price) {
+        ///Loads the values
+        var DateValueStart = document.getElementById("checkInDate").value;
+        var DateValueEnd = document.getElementById("checkOutDate").value;
+        var PriceValue = document.getElementById("toatalCosts");
+        let startDate = DateValueStart.value;
+        let endDate = DateValueEnd.value;
+        
+
+        var diff = Math.floor((Date.parse(DateValueEnd) - Date.parse(DateValueStart)) / 86400000);
+
+        console.log(diff)
+
+        ///Checks whether the startDate is higher than the endDate. If so changes the endDate to match the startDate.
+        if (new Date(startDate) > new Date(endDate)) {
+            DateValueEnd.value = startDate
+        }
+
+        ///Calculates the day difference and multiplies it by the price per day.
+        let totalPrice = ((new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 3600 * 24)) * price;
+        if (totalPrice >= 0) {
+            PriceValue.value = totalPrice;
+        } else {
+            PriceValue.value = PriceValue.value;
+        }
+    }
+</script>

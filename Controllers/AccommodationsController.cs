@@ -17,7 +17,9 @@ namespace ASPNET_MVC_AirBnB.Controllers
         public IActionResult BnBs()
         {
             BnBViewModel vm = new BnBViewModel
-            { Context = _context };
+            { 
+                Context = _context 
+            };
             vm.LoadList();
             return View(vm);
         }

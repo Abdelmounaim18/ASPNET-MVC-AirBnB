@@ -20,7 +20,7 @@ namespace ASPNET_MVC_AirBnB.ViewModels
 
         public void LoadReceipt(int? id)
         {
-            Reservation = Context.Reservations.Include(c => c.BnB).Where(c => c.Id == id).First();
+            Reservation = Context.Reservations.Include(c => c.BnB).Include(c => c.Guest).Where(c => c.Id == id).First();
         }
 
 

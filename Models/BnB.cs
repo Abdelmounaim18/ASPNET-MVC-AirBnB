@@ -1,15 +1,16 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ASPNET_MVC_AirBnB.Models
 {
     public class BnB
     {
-        ////public ObservableCollection<Reservation>? Reservations { get; set; }
+        //////public ObservableCollection<Reservation>? Reservations { get; set; }
 
 
         private int _id { get; set; }
         private string? _name { get; set; }
-        private double _price { get; set; }
+        private decimal _price { get; set; }
         private int _numRooms { get; set; }
         private int _numBeds { get; set; }
         private int _numBathrooms { get; set; }
@@ -21,17 +22,18 @@ namespace ASPNET_MVC_AirBnB.Models
         public string? Name
         { get => _name; set { _name = value; } }
 
-        public double Price
+        //[DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal Price
         { get => _price; set { _price = value;} }
 
         public int NumRooms
         { get => _numRooms; set { _numRooms = value;} }
 
         public int NumBeds
-        { get => _numBeds; set { _numRooms = value; } }
+        { get => _numBeds; set { _numBeds = value; } }
 
         public int NumBathrooms
-        { get => _numBathrooms; set { _numRooms = value;  } }
+        { get => _numBathrooms; set { _numBathrooms = value;  } }
 
         public string? SmokingAllowed
         { get => _smokingAllowed; set { _smokingAllowed = value;  } }
@@ -39,12 +41,12 @@ namespace ASPNET_MVC_AirBnB.Models
         public string? PetsAllowed
         { get => _petsAllowed; set { _petsAllowed = value;  } }
 
-        private Host? _host;
-        public Host? Host
+        private Host _host;
+        public Host Host
         { get => _host; set { _host = value;  } }
 
-        private Location? _location;
-        public Location? Location
+        private Location _location;
+        public Location Location
         { get => _location; set { _location = value;  } }
     }
 }

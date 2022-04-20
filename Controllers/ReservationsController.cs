@@ -2,6 +2,7 @@
 using ASPNET_MVC_AirBnB.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ASPNET_MVC_AirBnB.Controllers
@@ -17,10 +18,17 @@ namespace ASPNET_MVC_AirBnB.Controllers
 
         public IActionResult Checkout(int id)
         {
+            
 
             ReservationViewModel vm = new ReservationViewModel
             { Context = _context };
             vm.LoadBnBDetails(id);
+
+            if (id == null)
+            {
+                return NotFound();   
+            }
+
             return View(vm);
         }
 
@@ -47,13 +55,21 @@ namespace ASPNET_MVC_AirBnB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult PlaceReservation([Bind("Id,FirstName,LastName,Email,PhoneNumber")] Guest guest)
+        public IActionResult PlaceReservation(int BnBId, [Bind("Id,TotalPrice,CheckIn,CheckOut")] Reservation reservation,  [Bind("Id,FirstName,LastName,Email,PhoneNumber")] Guest guest)
         {
+
+            ReservationViewModel vm = new ReservationViewModel
+            {
+                Context = _context,
+            };
+
             if (ModelState.IsValid)
             {
-                _context.Add(guest);
+                reservation.BnB = _context.BnBs.First(c => c.Id == BnBId);
+                reservation.Guest = guest;
+                _context.Add(reservation);
                 _context.SaveChanges();
-                return RedirectToAction("Receipt");
+                return RedirectToAction("Receipt", new {id = _context.Reservations.Max(r => r.Id)});
             }
 
             return View();
@@ -61,9 +77,26 @@ namespace ASPNET_MVC_AirBnB.Controllers
 
 
 
-        public IActionResult Receipt()
+        public IActionResult Receipt(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ReservationViewModel vm = new ReservationViewModel
+            {
+                Context = _context,
+            };
+            vm.LoadReceipt(id);
+            if (vm.Reservation == null)
+            {
+                return NotFound();
+            }
+
+            return View(vm);
         }
+
+       
     }
 }

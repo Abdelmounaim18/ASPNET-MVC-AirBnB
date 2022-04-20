@@ -4,7 +4,7 @@ namespace ASPNET_MVC_AirBnB.Models
 {
     public class BnB
     {
-        //public ObservableCollection<Reservation>? Reservations { get; set; }
+        ////public ObservableCollection<Reservation>? Reservations { get; set; }
 
 
         private int _id { get; set; }
@@ -22,7 +22,7 @@ namespace ASPNET_MVC_AirBnB.Models
         { get => _name; set { _name = value; } }
 
         public double Price
-        { get => _price; set { _price = value; } }
+        { get => _price; set { _price = value;} }
 
         public int NumRooms
         { get => _numRooms; set { _numRooms = value;} }

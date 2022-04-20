@@ -78,7 +78,7 @@
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span><strong>Price  </strong><small>per night</small></span>
-                <span class="badge alert-warning rounded-pill"><strong>€</strong>@Html.DisplayFor(model => model.BnB.Price),-</span>
+                <span class="badge alert-warning rounded-pill"><strong>€</strong> @Html.DisplayFor(model => model.BnB.Price)</span>
             </li>
         </ul>
         <hr />
@@ -132,32 +132,31 @@
     </div>
     <div class="col-md-6">
         <div class="form-floating mb-3">
-            <input asp-for="Reservation.CheckIn" id="checkInDate" onchange="checkValidityAndPrice(@Model.BnB.Price)" type="date" class="form-control" placeholder="01-01-2022" value="">
+            <input asp-for="Reservation.CheckIn" id="checkInDate" onchange="calculateTotalCosts(@Model.BnB.Price)" type="date" class="form-control" placeholder="01-01-2022" value="">
             <label asp-for="Reservation.CheckIn">Check-in</label>
             <span asp-validation-for="Reservation.CheckIn" class="badge bg-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="Reservation.CheckOut" id="checkOutDate" onchange="checkValidityAndPrice(@Model.BnB.Price)" type="date" class="form-control" placeholder="01-02-2022" value="">
+            <input asp-for="Reservation.CheckOut" id="checkOutDate" onchange="calculateTotalCosts(@Model.BnB.Price)" type="date" class="form-control" placeholder="01-02-2022" value="">
             <label asp-for="Reservation.CheckOut">Check-out</label>
             <span asp-validation-for="Reservation.CheckOut" class="badge bg-danger"></span>
         </div>
 
-        @{
-            
-
-        }
-
         <div class="form-floating mb-3">
-            <input type="number" class="form-control" id="toatalCosts" placeholder="@Model.BnB.Price" value="@Model.BnB.Price" disabled>
-            <label>Total Costs | <strong>€</strong></label>
+            <input asp-for="Reservation.TotalPrice" type="text" class="form-control" id="totalCosts" placeholder="@Model.BnB.Price" value="@Model.BnB.Price" disabled>
+            <label asp-for="Reservation.TotalPrice">Total Costs | <strong>€</strong></label>
+            <span asp-validation-for="Reservation.TotalPrice" class="badge bg-danger"></span>
         </div>
+        <input name="BnBId" id="BnBId" value="@(Model.BnB.Id)" class="form-control" hidden/>
 
     </div>
+
     <div class="modal-footer justify-content-between">
         <a class="btn btn-outline-danger" type="button" asp-area="" asp-controller="Accommodations" asp-action="BnBs"><i class="bi bi-x-circle"></i> Cancel</a>
         <a class="btn btn-outline-warning" type="button" asp-area="" asp-controller="Reservations" asp-action="Receipt"><i class="bi bi-bug"></i> DEV | Receipt</a>
         <div>
-            <button type="submit" value="PlaceReservation" class="btn btn-outline-success"><i class="bi bi-check-circle"></i> Place Reservation</button>
+            
+            <button type="submit" value="Confirm" class="btn btn-outline-success"><i class="bi bi-check-circle"></i> Place Reservation</button>
         </div>
     </div>
 
@@ -171,33 +170,32 @@
 
 <script type="text/javascript">
 
-    function checkValidityAndPrice(price) {
-        ///Loads the values
-        var DateValueStart = document.getElementById("checkInDate").value;
-        var DateValueEnd = document.getElementById("checkOutDate").value;
-        var PriceValue = document.getElementById("toatalCosts");
+    function calculateTotalCosts(pricePerNight) {
 
+        let inputCheckInDate = document.getElementById("checkInDate").value;
+        let inputCheckOutDate = document.getElementById("checkOutDate").value;
+        let checkOutOfRange = document.getElementById("checkOutDate");
+        let totalCosts = document.getElementById("totalCosts");
 
-        var diff = Math.floor((Date.parse(DateValueEnd) - Date.parse(DateValueStart)) / 86400000);
+        let diff = Math.floor((Date.parse(inputCheckOutDate) - Date.parse(inputCheckInDate)) / 86400000);
+        let calculatedTotalCosts = diff * pricePerNight;
 
-        console.log(diff)
+        console.log(`Price: ${pricePerNight}`);
+        console.log(`No. Days: ${diff}`);
+        console.log(`Check In: ${inputCheckInDate}`);
+        console.log(`Check Out: ${inputCheckOutDate}`);
 
-        ///Checks whether the startDate is higher than the endDate. If so changes the endDate to match the startDate.
-        if (new Date(startDate) > Date.parse(DateValueEnd)) {
-            DateValueEnd.value = startDate
+        if (diff < 0) {
+            checkOutOfRange.value = null;
+            totalCosts.value = null;
         }
 
-        ///Calculates the day difference and multiplies it by the price per day.
-        let calculatedCosts = diff * price;
+        if (diff === 0) {
+                calculatedTotalCosts = parseFloat(pricePerNight);
+            }
 
-        if calculatedCosts
-        
-       
-
-        if (totalPrice >= 0) {
-            PriceValue.value = totalPrice;
-        } else {
-            PriceValue.value = PriceValue.value;
+        if (calculatedTotalCosts >= 0) {            
+            totalCosts.value = parseFloat(calculatedTotalCosts);
         }
     }
 </script>

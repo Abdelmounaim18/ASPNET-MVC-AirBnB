@@ -11,13 +11,18 @@ namespace ASPNET_MVC_AirBnB.ViewModels
         public BnB BnB { get; set; }
         public Reservation Reservation { get; set; }
         public Guest Guest { get; set; }
-        public List<Reservation> AllReservations { get; set; }
      
         
-        public void LoadBnBDetails(int id)
+        public void LoadBnBDetails(int? id = null)
         {
             BnB = Context.BnBs.Include(c => c.Location).Include(c => c.Host).First(c => c.Id == id);
         }
+
+        public void LoadReceipt(int? id)
+        {
+            Reservation = Context.Reservations.Include(c => c.BnB).Where(c => c.Id == id).First();
+        }
+
 
     }
 }

@@ -14,6 +14,8 @@ namespace ASPNET_MVC_AirBnB.Models
 
         public int Id
         { get => _id; set { _id = value; } }
+
+        [Required(ErrorMessage = "Please choose a different Check-out date")]
         public double TotalPrice
         { get => _totalprice; set { _totalprice = value; } }
 
@@ -26,6 +28,20 @@ namespace ASPNET_MVC_AirBnB.Models
         [Required(ErrorMessage = "Please enter your {0} date")]
         public DateTime CheckOut
         { get => _checkOut; set { if (value > _checkIn) { _checkOut = value; }; } }
+
+        private BnB? _bnb;
+        public BnB? BnB
+        { get => _bnb; set { _bnb = value; } }
+
+
+        private Guest? _guest;
+        public Guest? Guest
+        { get => _guest; set { _guest = value; } }
+
+
+        private Location? _location;
+        public Location? Location
+        { get => _location; set { _location = value; } }
 
 
 

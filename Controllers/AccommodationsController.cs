@@ -1,6 +1,8 @@
 ﻿using ASPNET_MVC_AirBnB.Models;
 using ASPNET_MVC_AirBnB.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ASPNET_MVC_AirBnB.Controllers
 {
@@ -16,20 +18,21 @@ namespace ASPNET_MVC_AirBnB.Controllers
 
         public IActionResult BnBs()
         {
-            BnBViewModel vm = new BnBViewModel
-            { Context = _context };
-            vm.LoadList();
-            return View(vm);
+            BnBViewModel bnbViewModel = new BnBViewModel
+            { 
+                Context = _context 
+            };
+
+            bnbViewModel.LoadAllBnBs();
+
+            if (bnbViewModel.AllBnBs == null)
+            {
+                return NotFound();
+            }
+
+            return View(bnbViewModel);
         }
 
-        public IActionResult MoreInfo()
-        {
-            return View();
-        }
 
-        public IActionResult Lookup()
-        {
-            return View();
-        }
     }
 }

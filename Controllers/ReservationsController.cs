@@ -16,49 +16,37 @@ namespace ASPNET_MVC_AirBnB.Controllers
             _context = context;
         }
 
-        public IActionResult Checkout(int id)
+        public IActionResult Checkout(int? id)
         {
-            
 
-            ReservationViewModel vm = new ReservationViewModel
-            { Context = _context };
-            vm.LoadBnBDetails(id);
+
+            ReservationViewModel reservationViewModel = new ReservationViewModel
+            { 
+                Context = _context 
+            };
 
             if (id == null)
             {
-                return NotFound();   
+                return NotFound();
             }
 
-            return View(vm);
+            reservationViewModel.LoadBnBDetails(id);
+
+            if (reservationViewModel.BnB == null)
+            {
+                return NotFound();
+            }
+
+            return View(reservationViewModel);
         }
-
-        //public async Task<IActionResult> Checkout(int? id)
-        //{
-
-
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var SelectedBnB = await _context.BnBs.Include(c => c.Location).Include(c => c.Host).FirstOrDefaultAsync(m => m.Id == id);
-
-        //    if (SelectedBnB == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(SelectedBnB);
-        //}
-
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult PlaceReservation(int BnBId, [Bind("Id,TotalPrice,CheckIn,CheckOut")] Reservation reservation,  [Bind("Id,FirstName,LastName,Email,PhoneNumber")] Guest guest)
+        public IActionResult PlaceReservation(int BnBId, [Bind("Id,TotalPrice,CheckIn,CheckOut")] Reservation reservation, [Bind("Id,FirstName,LastName,Email,PhoneNumber")] Guest guest)
         {
 
-            ReservationViewModel vm = new ReservationViewModel
+            ReservationViewModel reservationViewModel = new ReservationViewModel
             {
                 Context = _context,
             };
@@ -69,7 +57,10 @@ namespace ASPNET_MVC_AirBnB.Controllers
                 reservation.Guest = guest;
                 _context.Add(reservation);
                 _context.SaveChanges();
-                return RedirectToAction("Receipt", new {id = _context.Reservations.Max(r => r.Id)});
+                return RedirectToAction("Receipt", new
+                {
+                    id = _context.Reservations.Max(r => r.Id)
+                });
             }
 
             return View();
@@ -79,24 +70,26 @@ namespace ASPNET_MVC_AirBnB.Controllers
 
         public IActionResult Receipt(int? id)
         {
+            ReservationViewModel reservationViewModel = new ReservationViewModel
+            {
+                Context = _context,
+            };
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            ReservationViewModel vm = new ReservationViewModel
-            {
-                Context = _context,
-            };
-            vm.LoadReceipt(id);
-            if (vm.Reservation == null)
+            reservationViewModel.LoadReceipt(id);
+
+            if (reservationViewModel.Reservation == null)
             {
                 return NotFound();
             }
 
-            return View(vm);
+            return View(reservationViewModel);
         }
 
-       
+
     }
 }

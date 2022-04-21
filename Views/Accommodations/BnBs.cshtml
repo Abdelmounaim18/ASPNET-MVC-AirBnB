@@ -13,19 +13,19 @@
 </nav>
 
 <div class="row">
-    @foreach (var item in Model.AllBnBs)
+    @foreach (var bnb in Model.AllBnBs)
     {
+        <!-- Card -->
         <div class="col-lg-4 mb-4">
             <div class="card bg-dark text-white">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="bi bi-house-door"></i> @Html.DisplayFor(modelItem => item.Name)</h5>
+                    <h5 class="card-title"><i class="bi bi-house-door"></i> @Html.DisplayFor(model => bnb.Name)</h5>
                     <p class="card-text"></p>
-                    <p><i class="bi bi-geo"></i> @Html.DisplayFor(modelItem => item.Location.City), @Html.DisplayFor(modelItem => item.Location.Country)</p>
-
-                    <p><i class="bi bi-person-badge"></i> @Html.DisplayFor(modelItem => item.Host.Name)</p>
+                    <p><i class="bi bi-geo"></i> @Html.DisplayFor(model => bnb.Location.City), @Html.DisplayFor(model => bnb.Location.Country)</p>
+                    <p><i class="bi bi-person-badge"></i> @Html.DisplayFor(model => bnb.Host.Name)</p>
                     <hr>
-                    <a class="btn btn-outline-warning" asp-area="" asp-controller="Reservations" asp-action="Checkout" asp-route-id="@item.Id"><i class="bi bi-door-open"></i> Book Now</a>
-                    <a type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#moreInfoModal-@Html.DisplayFor(modelItem => item.Id)">
+                    <a class="btn btn-outline-warning" asp-area="" asp-controller="Reservations" asp-action="Checkout" asp-route-id="@bnb.Id"><i class="bi bi-door-open"></i> Book Now</a>
+                    <a type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#moreInfoModal-@Html.DisplayFor(model => bnb.Id)">
                         <i class="bi bi-card-list"></i>
                         Details
                     </a>
@@ -33,36 +33,33 @@
             </div>
         </div>
 
-
         <!-- Modal -->
-        <div class="modal fade" id="moreInfoModal-@Html.DisplayFor(modelItem => item.Id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="moreInfoModal-@Html.DisplayFor(model => bnb.Id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><strong>Details | </strong>@Html.DisplayFor(modelItem => item.Name)</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><strong>Details | </strong>@Html.DisplayFor(model => bnb.Name)</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
-
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <ul class="list-group">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <strong>Rooms</strong>
-                                        <span class="badge alert-info rounded-pill">@Html.DisplayFor(modelItem => item.NumRooms)</span>
+                                        <span class="badge alert-info rounded-pill">@Html.DisplayFor(model => bnb.NumRooms)</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <strong>Bathrooms</strong>
-                                        <span class="badge alert-info rounded-pill">@Html.DisplayFor(modelItem => item.NumBathrooms)</span>
+                                        <span class="badge alert-info rounded-pill">@Html.DisplayFor(model => bnb.NumBathrooms)</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <strong>Beds</strong>
-                                        <span class="badge alert-info rounded-pill">@Html.DisplayFor(modelItem => item.NumBeds)</span>
+                                        <span class="badge alert-info rounded-pill">@Html.DisplayFor(model => bnb.NumBeds)</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <strong>Pets</strong>
-                                        @if (item.PetsAllowed == "Yes")
+                                        @if (bnb.PetsAllowed == "Yes")
                                         {
                                             <span class="badge alert-success rounded-pill"><span class="bi bi-check-circle-fill"></span> Allowed</span>
                                         }
@@ -70,14 +67,11 @@
                                         {
                                             <span class="badge alert-danger rounded-pill"><span class="bi bi-x-circle-fill"></span> Not Allowed</span>
                                         }
-
-
-
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <strong>Smoking</strong>
 
-                                        @if (item.SmokingAllowed == "Yes")
+                                        @if (bnb.SmokingAllowed == "Yes")
                                         {
                                             <span class="badge alert-success rounded-pill"><span class="bi bi-check-circle-fill"></span> Allowed</span>
                                         }
@@ -85,7 +79,6 @@
                                         {
                                             <span class="badge alert-danger rounded-pill"><span class="bi bi-x-circle-fill"></span> Not Allowed</span>
                                         }
-
                                     </li>
                                 </ul>
                             </div>
@@ -93,23 +86,23 @@
                                 <ul class="list-group">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <strong>Street </strong>
-                                        <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Location.Street)</span>
+                                        <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => bnb.Location.Street)</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <strong>Zip Code </strong>
-                                        <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Location.ZipCode)</span>
+                                        <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => bnb.Location.ZipCode)</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <strong>City </strong>
-                                        <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Location.City)</span>
+                                        <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => bnb.Location.City)</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <strong>Country </strong>
-                                        <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Location.Country)</span>
+                                        <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => bnb.Location.Country)</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span><strong>Price  </strong><small>per night</small></span>
-                                        <span class="badge alert-warning rounded-pill"><strong>€</strong>@Html.DisplayFor(modelItem => item.Price),-</span>
+                                        <span class="badge alert-warning rounded-pill"><strong>€</strong>@Html.DisplayFor(model => bnb.Price),-</span>
                                     </li>
                                 </ul>
                             </div>
@@ -118,23 +111,20 @@
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <strong>Host </strong>
-                                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Host.Name)</span>
+                                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => bnb.Host.Name)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <strong>Email </strong>
-                                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Host.Email)</span>
+                                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => bnb.Host.Email)</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <strong>Phone </strong>
-                                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(modelItem => item.Host.PhoneNumber)</span>
+                                <span class="badge alert-primary rounded-pill">@Html.DisplayFor(model => bnb.Host.PhoneNumber)</span>
                             </li>
-
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-
-
     }
 </div>

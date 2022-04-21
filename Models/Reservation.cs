@@ -22,12 +22,12 @@ namespace ASPNET_MVC_AirBnB.Models
         [Display(Name = "Check-in")]
         [Required(ErrorMessage = "Please enter your {0} date")]
         public DateTime CheckIn
-        { get => _checkIn; set { if (value < _checkOut) { _checkIn = value; }; } }
+        { get => _checkIn; set { _checkIn = value; } }
 
         [Display(Name = "Check-out")]
         [Required(ErrorMessage = "Please enter your {0} date")]
         public DateTime CheckOut
-        { get => _checkOut; set { if (value > _checkIn) { _checkOut = value; }; } }
+        { get => _checkOut; set { _checkOut = value; } } 
 
         private BnB? _bnb;
         public BnB? BnB
@@ -39,9 +39,6 @@ namespace ASPNET_MVC_AirBnB.Models
         { get => _guest; set { _guest = value; } }
 
 
-        private Location? _location;
-        public Location? Location
-        { get => _location; set { _location = value; } }
 
 
 

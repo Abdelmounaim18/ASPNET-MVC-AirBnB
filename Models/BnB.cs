@@ -28,10 +28,10 @@ namespace ASPNET_MVC_AirBnB.Models
         { get => _numRooms; set { _numRooms = value;} }
 
         public int NumBeds
-        { get => _numBeds; set { _numRooms = value; } }
+        { get => _numBeds; set { _numBeds = value; } }
 
         public int NumBathrooms
-        { get => _numBathrooms; set { _numRooms = value;  } }
+        { get => _numBathrooms; set { _numBathrooms = value;  } }
 
         public string? SmokingAllowed
         { get => _smokingAllowed; set { _smokingAllowed = value;  } }

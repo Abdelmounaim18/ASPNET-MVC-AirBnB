@@ -10,7 +10,7 @@
         <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
     </ol>
 </nav>
-<h4>Summary | @Html.DisplayFor(model => model.BnB.Name)</h4>
+<h4><strong>Summary | </strong> @Html.DisplayFor(model => model.BnB.Name)</h4>
 
 <div class="row g-3">
 
@@ -143,7 +143,10 @@
         </div>
 
         <div class="form-floating mb-3">
-            <input asp-for="Reservation.TotalPrice" type="text" class="form-control" id="totalCosts" placeholder="@Model.BnB.Price" value="@Model.BnB.Price" disabled>
+            @*<strong>Total Paid</strong>
+            <span class="badge alert-warning rounded-pill">€@Html.DisplayFor(model => model.Reservation.TotalPrice)</span>*@
+                    
+            <span asp-for="Reservation.TotalPrice" type="number" class="form-control" id="totalCosts" placeholder="@Model.BnB.Price"></span>
             <label asp-for="Reservation.TotalPrice">Total Costs | <strong>€</strong></label>
             <span asp-validation-for="Reservation.TotalPrice" class="badge bg-danger"></span>
         </div>
@@ -168,9 +171,11 @@
 }
 }
 
-<script type="text/javascript">
+<script>
 
     function calculateTotalCosts(pricePerNight) {
+
+        pricePerNight = Number(pricePerNight);
 
         let inputCheckInDate = document.getElementById("checkInDate").value;
         let inputCheckOutDate = document.getElementById("checkOutDate").value;
@@ -191,11 +196,14 @@
         }
 
         if (diff === 0) {
-                calculatedTotalCosts = parseFloat(pricePerNight);
+                calculatedTotalCosts = Number(pricePerNight);
+                return Number(calculatedTotalCosts);
             }
 
         if (calculatedTotalCosts >= 0) {            
-            totalCosts.value = parseFloat(calculatedTotalCosts);
+            totalCosts.value = Number(calculatedTotalCosts);
+            console.log(`Price: ${Number(calculatedTotalCosts)}`);
+            return Number(calculatedTotalCosts)
         }
     }
 </script>

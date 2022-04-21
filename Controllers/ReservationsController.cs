@@ -43,7 +43,7 @@ namespace ASPNET_MVC_AirBnB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult PlaceReservation(int BnBId, [Bind("Id,TotalPrice,CheckIn,CheckOut")] Reservation reservation, [Bind("Id,FirstName,LastName,Email,PhoneNumber")] Guest guest)
+        public async Task<IActionResult> PlaceReservation(int BnBId, [Bind("Id,TotalPrice,CheckIn,CheckOut")] Reservation reservation, [Bind("Id,FirstName,LastName,Email,PhoneNumber")] Guest guest)
         {
 
             ReservationViewModel reservationViewModel = new ReservationViewModel
@@ -56,7 +56,7 @@ namespace ASPNET_MVC_AirBnB.Controllers
                 reservation.BnB = _context.BnBs.First(c => c.Id == BnBId);
                 reservation.Guest = guest;
                 _context.Add(reservation);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Receipt", new
                 {
                     id = _context.Reservations.Max(r => r.Id)

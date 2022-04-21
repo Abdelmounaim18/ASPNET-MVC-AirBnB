@@ -118,7 +118,7 @@
             <span asp-validation-for="Guest.Email" class="badge bg-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input asp-for="Guest.PhoneNumber" type="number" class="form-control" placeholder="06123456789" value="">
+            <input asp-for="Guest.PhoneNumber" type="number" class="form-control" placeholder="0612345678" maxlength="9" value="">
             <label asp-for="Guest.PhoneNumber">Phone</label>
             <span asp-validation-for="Guest.PhoneNumber" class="badge bg-danger"></span>
         </div>
